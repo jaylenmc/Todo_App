@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
-url_patterns = [
-    path('', views.person),
+urlpatterns = [
+    path('goolgle/auth', views.person),
+    path('logout/', views.loggingOut, name='logout')
 ]
+
+app_name = 'api'

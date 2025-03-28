@@ -7,9 +7,18 @@
 </head>
 <body>
     <h1>Todo List</h1>
-    <input type="text" placeholder='Type here..'>
-    <button>Add Task</button>
-    <br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit'>Add Task</button>
+    </form>
+
+    <ul>
+        {% for obj in tasks %}
+            <li>{{ obj.title }}</li>
+            <p> - {{ obj.description }}</p>
+        {% endfor %}
+    </ul>
     <a href="{% url 'home' %}">Back</a>
 </body>
 </html>

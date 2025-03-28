@@ -27,7 +27,6 @@ def person(request):
     response = requests.post(access_code_url, data=data)
 
     if response.status_code == 200:
-        print(response.json())
         access_token = response.json().get('access_token')
     else:
         return Response(f"Error getting access token: {response.text}", status=400)
@@ -39,7 +38,6 @@ def person(request):
     user_info = requests.get('https://www.googleapis.com/oauth2/v3/userinfo', headers=header)
 
     if user_info.status_code == 200:
-        print(f'This is the user data: {user_info.json()}')
         user_email = user_info.json().get('email', 'No email provided')
         first_name = user_info.json().get('given_name', 'No name provided')
 
@@ -60,13 +58,7 @@ def person(request):
     else:
         return Response(f"There was an error getting user info: {user_info.text}", status=400)
 
-    print(f'eherrrrrrrrrrr: {request.user}')
-    print(f'Session ID: {request.session.session_key}')
-    print(f'User logged in: {request.user.is_authenticated}')
-
-    
     serializer = UserSerializer(user)
-    print(f'Serialized: {serializer.data}')
 
 
     return render(request, 'tasks/home.html', context=serializer.data)

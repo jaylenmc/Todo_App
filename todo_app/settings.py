@@ -131,3 +131,5 @@ GOOGLE_CLIENT_SECRET = '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'
 REDIRECT_URI = 'http://127.0.0.1:8000/goolgle/auth'
 
 AUTH_USER_MODEL = 'tasks.AppUser'
+
+LOGIN_URL = '/'

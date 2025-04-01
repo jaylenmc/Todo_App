@@ -6,6 +6,13 @@ from django.conf import settings
 from tasks.models import AppUser
 from django.contrib.auth import login, logout
 from .serializers import UserSerializer
+from django.shortcuts import render, redirect, get_object_or_404
+from django.conf import settings
+from .models import Task, AppUser
+from .forms import TaskForm
+from api.serializers import taskSerializer, UserSerializer
+from django.contrib.auth.decorators import login_required
+
 
 @api_view(['GET'])
 def person(request):
@@ -66,3 +73,33 @@ def person(request):
 def loggingOut(request):
     logout(request)
     return redirect('/')
+
+@login_required
+def userTasks(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.user = request.user
+            task.save()
+
+        return redirect(request.path)
+    else:
+        form = TaskForm()
+
+        user = AppUser.objects.all().filter(email=request.user.email).first()
+        list_items = Task.objects.all().filter(user=user)
+        serilizer = taskSerializer(list_items, many=True)
+        context = {
+            'form': form,
+            'tasks': serilizer.data,
+        }
+
+        return render(request, 'tasks/todo.html', context=context)
+
+def deleteTask(request, task_id):
+    if request.method == 'POST':
+        task = get_object_or_404(Task, id=task_id)
+        task.delete()
+
+    return Response(task, status=400)

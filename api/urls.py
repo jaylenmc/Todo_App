@@ -1,9 +1,8 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
 
 urlpatterns = [
-    path('goolgle/auth', views.person),
-    path('logout/', views.loggingOut, name='logout')
+    path('auth/', include('authentication.urls')),
+    path('tasks/', include('tasks.urls'))
+    # path('tasks/', views.userTasks, name='userTasks'),
+    # path('tasks/delete/<int:task_id>/',views.deleteTask, name='deleteTask' ),
 ]
-
-app_name = 'api'

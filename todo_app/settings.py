@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'authentication',
     'api',
     'rest_framework',
     'tasks',
@@ -126,10 +127,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GOOGLE_CLIENT_ID = '368691224868-akqv9ig53v1l8n7sravjqc5tnt6l5fb8.apps.googleusercontent.com'
-GOOGLE_CLIENT_SECRET = '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'
-REDIRECT_URI = 'http://127.0.0.1:8000/goolgle/auth'
+GOOGLE_CLIENT_ID = '368691224868-eg12q87tl9ramv11tj768e28i90opme1.apps.googleusercontent.com'
+GOOGLE_CLIENT_SECRET = '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'
+REDIRECT_URI = 'http://127.0.0.1:8000/api/auth/check'
 
-AUTH_USER_MODEL = 'tasks.AppUser'
+AUTH_USER_MODEL = 'authentication.AppUser'
 
 LOGIN_URL = '/'
